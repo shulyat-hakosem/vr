@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#050506" />
+  <meta name="description" content="הסטודיו הווירטואלי של יוני — המרחב שלנו לפרויקטי VR." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Ccircle cx=%228%22 cy=%228%22 r=%225%22 fill=%22%23f6d3dc%22/%3E%3C/svg%3E" />
+  <title>הסטודיו הווירטואלי של יוני</title>
+  <style>
+    @font-face {
+      font-family: "FrankRuhlLibre";
+      src: url("assets/fonts/FrankRuhlLibre.ttf") format("truetype");
+      font-weight: 300 900;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #050506;
+      --ink: #fbf4f1;
+      --ink-soft: #f1e8da;
+      --blossom: #f6d3dc;
+      --petal: #ecd2cf;
+      --blush: #e58aa2;
+      --sun: rgba(255, 232, 208, 0.18);
+      --card: rgba(251, 244, 241, 0.045);
+      --card-edge: rgba(246, 211, 220, 0.2);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "FrankRuhlLibre", "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1.45;
+    }
+
+    body {
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .sun, .sun-soft {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* An unseen light, like a sun just outside the frame. */
+    .sun {
+      background:
+        radial-gradient(ellipse 90% 62% at 82% -10%, rgba(255, 232, 208, 0.22), transparent 60%),
+        radial-gradient(ellipse 50% 40% at 12% 100%, rgba(236, 210, 207, 0.08), transparent 55%);
+      animation: breathe 16s ease-in-out infinite;
+    }
+
+    .sun-soft {
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(255, 248, 240, 0.035), transparent 70%);
+    }
+
+    @keyframes breathe {
+      0%, 100% { opacity: 0.72; }
+      50% { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sun { animation: none; }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 2.4rem 2rem 1.5rem;
+    }
+
+    header {
+      margin-bottom: 1.9rem;
+    }
+
+    .mark {
+      margin: 0 0 0.85rem;
+      font-size: 1.05rem;
+      letter-spacing: 0.22em;
+      color: var(--blossom);
+      opacity: 0.85;
+    }
+
+    h1 {
+      margin: 0 0 0.7rem;
+      font-weight: 400;
+      font-size: clamp(2.2rem, 6vw, 3.35rem);
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 36em;
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      opacity: 0.82;
+    }
+
+    #projects {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .card {
+      display: grid;
+      grid-template-columns: minmax(240px, 320px) 1fr;
+      gap: 1.6rem;
+      align-items: center;
+      min-height: 188px;
+      padding: 1.05rem 1.3rem 1.1rem 1.4rem;
+      text-align: start;
+      background: var(--card);
+      border: 1px solid var(--card-edge);
+      border-radius: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      -webkit-tap-highlight-color: rgba(246, 211, 220, 0.25);
+      transition: background 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      background: rgba(246, 211, 220, 0.09);
+      border-color: rgba(246, 211, 220, 0.48);
+      outline: none;
+    }
+
+    .card:focus-visible {
+      box-shadow: 0 0 0 3px rgba(246, 211, 220, 0.35);
+    }
+
+    .thumb {
+      margin: 0;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: #0a0a0c;
+    }
+
+    .thumb img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .body { min-width: 0; text-align: start; }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.55rem 0.9rem;
+      margin: 0 0 0.55rem;
+      font-size: 1rem;
+      color: var(--petal);
+    }
+
+    .status {
+      display: inline-block;
+      padding: 0.12rem 0.7rem 0.2rem;
+      border: 1px solid rgba(246, 211, 220, 0.45);
+      border-radius: 999px;
+      color: var(--blossom);
+      letter-spacing: 0.04em;
+    }
+
+    .card h2 {
+      margin: 0 0 0.4rem;
+      font-weight: 400;
+      font-size: clamp(1.35rem, 3.2vw, 1.7rem);
+      line-height: 1.3;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--ink-soft);
+      opacity: 0.8;
+    }
+
+    .enter {
+      display: block;
+      margin-top: 0.65rem;
+      font-size: 1rem;
+      color: var(--blossom);
+    }
+
+    footer {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      color: var(--ink-soft);
+      opacity: 0.62;
+    }
+
+    footer p { margin: 0; }
+
+    .note, .error {
+      padding: 2rem 0;
+      color: var(--ink-soft);
+      opacity: 0.75;
+    }
+
+    .error { color: var(--blush); opacity: 1; }
+
+    @media (max-width: 760px) {
+      html, body { font-size: 26px; }
+      .wrap { padding: 3rem 1.2rem 2.5rem; }
+      .card {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1rem 1.1rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sun" aria-hidden="true"></div>
+  <div class="sun-soft" aria-hidden="true"></div>
+  <div class="wrap">
+    <header>
+      <p class="mark" dir="ltr">NA.V.R.</p>
+      <h1>הסטודיו הווירטואלי של יוני</h1>
+      <p class="lede">המרחב שלנו לפרויקטי VR. שומרים את הדף הזה פעם אחת, וכל טסט חדש מחכה כאן.</p>
+    </header>
+    <main id="projects">
+      <p class="note">טוען את הפרויקטים…</p>
+    </main>
+    <footer>
+      <p>שמרו את הכתובת בסימניות בדפדפן של הקווסט. מכאן נכנסים לכל המרחבים.</p>
+    </footer>
+  </div>
+  <script>
+    const MONTHS = [
+      "ינואר", "פברואר", "מרץ", "אפריל", "מאי", "יוני",
+      "יולי", "אוגוסט", "ספטמבר", "אוקטובר", "נובמבר", "דצמבר"
+    ];
+
+    function formatDate(iso) {
+      if (!iso) return "";
+      const parts = String(iso).split("-");
+      if (parts.length < 3) return iso;
+      const y = parts[0];
+      const m = Number(parts[1]);
+      const d = Number(parts[2]);
+      if (!m || !d) return iso;
+      return d + " ב" + MONTHS[m - 1] + " " + y;
+    }
+
+    function el(tag, cls, text) {
+      const node = document.createElement(tag);
+      if (cls) node.className = cls;
+      if (text) node.textContent = text;
+      return node;
+    }
+
+    /* Keep Latin abbreviations like NA.V.R. from flipping in RTL. */
+    function fillMixed(node, text) {
+      const re = /[A-Za-z][A-Za-z0-9.]*/g;
+      let last = 0;
+      let m;
+      while ((m = re.exec(text))) {
+        if (m.index > last) node.appendChild(document.createTextNode(text.slice(last, m.index)));
+        const span = document.createElement("span");
+        span.dir = "ltr";
+        span.textContent = m[0];
+        node.appendChild(span);
+        last = m.index + m[0].length;
+      }
+      if (last < text.length) node.appendChild(document.createTextNode(text.slice(last)));
+    }
+
+    function renderCard(project) {
+      const card = el("a", "card");
+      card.href = project.url;
+      if (/^https?:/i.test(project.url || "")) card.rel = "noopener";
+
+      if (project.thumbnail) {
+        const fig = el("figure", "thumb");
+        const img = document.createElement("img");
+        img.src = project.thumbnail;
+        img.alt = project.title || "";
+        fig.appendChild(img);
+        card.appendChild(fig);
+      }
+
+      const body = el("div", "body");
+      const meta = el("div", "meta");
+      if (project.status) meta.appendChild(el("span", "status", project.status));
+      if (project.date) meta.appendChild(el("time", "", formatDate(project.date))).dateTime = project.date;
+      if (meta.childNodes.length) body.appendChild(meta);
+
+      const h2 = el("h2", "");
+      fillMixed(h2, project.title || "בלי שם");
+      body.appendChild(h2);
+      if (project.subtitle) {
+        const sub = el("p", "");
+        fillMixed(sub, project.subtitle);
+        body.appendChild(sub);
+      }
+      body.appendChild(el("span", "enter", "כניסה"));
+      card.appendChild(body);
+      return card;
+    }
+
+    const root = document.getElementById("projects");
+
+    fetch("projects.json", { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        const list = (data.projects || data || []).slice();
+        list.sort(function (a, b) {
+          return String(b.date || "").localeCompare(String(a.date || ""));
+        });
+        root.innerHTML = "";
+        if (!list.length) {
+          root.appendChild(el("p", "note", "עדיין אין פרויקטים בפורטל."));
+          return;
+        }
+        list.forEach(function (project) {
+          root.appendChild(renderCard(project));
+        });
+      })
+      .catch(function () {
+        root.innerHTML = "";
+        root.appendChild(el("p", "error", "לא הצלחתי לטעון את רשימת הפרויקטים."));
+      });
+  </script>
+</body>
+</html>
